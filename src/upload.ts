@@ -612,28 +612,47 @@ const updateVideoInfo = async (videoJSON: VideoToEdit, messageTransport: Message
             switch (publish) {
                 case 'private':
                     await page
-                        .click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(2)`)
+                        .click(`tp-yt-paper-radio-button[name="PRIVATE"]`)
                         .catch(
                             async (err) =>
-                                await page.click(
-                                    `#privacy-radios > tp-yt-paper-radio-button.style-scope.ytcp-video-visibility-select.iron-selected`
-                                )
+                                await page
+                                .click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(2)`)
+                                .catch(
+                                    async (err) =>
+                                        await page.click(
+                                            `#privacy-radios > tp-yt-paper-radio-button.style-scope.ytcp-video-visibility-select.iron-selected`
+                                        )
+                                )                                
                         )
                     break
                 case 'unlisted':
                     await page
-                        .click(
-                            `#privacy-radios > tp-yt-paper-radio-button.style-scope.ytcp-video-visibility-select.iron-selected`
-                        )
+                        .click(`tp-yt-paper-radio-button[name="UNLISTED"]`)
                         .catch(
-                            async (err) => await page.click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(11)`)
+                            async (err) => 
+                                await page
+                                .click(`#privacy-radios > tp-yt-paper-radio-button.style-scope.ytcp-video-visibility-select.iron-selected`)
+                                .catch(
+                                    async (err) =>
+                                        await page.click(
+                                            `#privacy-radios > tp-yt-paper-radio-button:nth-child(11)`
+                                        )
+                                )                                 
                         )
                     break
                 case 'public':
                     await page
-                        .click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(15)`)
+                        .click(`tp-yt-paper-radio-button[name="PUBLIC"]`)
                         .catch(
-                            async (err) => await page.click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(16)`)
+                            async (err) => 
+                                await page
+                                    .click(`#privacy-radios > tp-yt-paper-radio-button:nth-child(15)`)
+                                    .catch(
+                                        async (err) =>
+                                            await page.click(
+                                                `#privacy-radios > tp-yt-paper-radio-button:nth-child(16)`
+                                            )
+                                    )
                         )
                     break
                 case 'public&premiere':
